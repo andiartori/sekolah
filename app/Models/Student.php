@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'npid',
+        'nama',
+        'nipd',
         'jenis_kelamin',
         'nisn',
         'tempat_lahir',
@@ -23,49 +22,53 @@ class Student extends Model
         'rt',
         'rw',
         'kecamatan',
+        'ayah_nama',
+        'ayah_tahun_lahir',
+        'ayah_pendidikan',
+        'ayah_pekerjaan',
+        'ayah_penghasilan',
+        'ayah_nik',
+        'ibu_nama',
+        'ibu_tahun_lahir',
+        'ibu_pendidikan',
+        'ibu_pekerjaan',
+        'ibu_penghasilan',
+        'ibu_nik',
+        'wali_nama',
+        'wali_tahun_lahir',
+        'wali_pendidikan',
+        'wali_pekerjaan',
+        'wali_penghasilan',
+        'wali_nik',
         'kelas_saat_ini',
-        'ayah_id',
-        'ibu_id',
-        'wali_id',
     ];
+
     protected $casts = [
         'tanggal_lahir' => 'date',
+        'ayah_penghasilan' => 'integer',
+        'ibu_penghasilan' => 'integer',
+        'wali_penghasilan' => 'integer',
     ];
 
-    // Relationships
-    public function ayah(): BelongsTo
-    {
-        return $this->belongsTo(ParentModel::class, 'ayah_id');
-    }
-
-    public function ibu(): BelongsTo
-    {
-        return $this->belongsTo(ParentModel::class, 'ibu_id');
-    }
-
-    public function wali(): BelongsTo
-    {
-        return $this->belongsTo(ParentModel::class, 'wali_id');
-    }
-
-
-    //Helper Methods
-    //dapatkan umur murid
-    public function getUmurAttribute(): int
+    // Helper method to get age
+    public function getUmurAttribute()
     {
         return $this->tanggal_lahir->diffInYears(now());
     }
-    //dapat jenis kelamin murid
 
-    public function getJenisKelaminAttribute(): string
+    // Helper method to format penghasilan
+    public function getFormattedAyahPenghasilanAttribute()
     {
-        return $this->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+        return $this->ayah_penghasilan ? 'Rp ' . number_format($this->ayah_penghasilan, 0, ',', '.') : '-';
     }
 
-    //dapat alamat lengkap murid
-    public function getAlamatLengkapAttribute(): string
+    public function getFormattedIbuPenghasilanAttribute()
     {
-        return "{$this->alamat}, RT {$this->rt}/RW {$this->rw}, {$this->kecamatan}";
+        return $this->ibu_penghasilan ? 'Rp ' . number_format($this->ibu_penghasilan, 0, ',', '.') : '-';
     }
 
+    public function getFormattedWaliPenghasilanAttribute()
+    {
+        return $this->wali_penghasilan ? 'Rp ' . number_format($this->wali_penghasilan, 0, ',', '.') : '-';
+    }
 }
