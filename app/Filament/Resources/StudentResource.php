@@ -284,20 +284,16 @@ class StudentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tempat_lahir')
                     ->label('Tempat Lahir')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('agama')
-                    ->label('Agama')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Agama'),
                 Tables\Columns\TextColumn::make('alamat')
                     ->label('Alamat')
-                    ->limit(50)
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('jenis_kelamin')
