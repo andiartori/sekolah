@@ -24,6 +24,8 @@ class StudentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Siswa';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -100,6 +102,9 @@ class StudentResource extends Resource
 
                                         Forms\Components\TextInput::make('kelas_saat_ini')
                                             ->label('Kelas Saat Ini')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('tahun_ajar')
+                                            ->label('Tahun Ajaran')
                                             ->required(),
                                     ])
                             ]),
@@ -278,6 +283,10 @@ class StudentResource extends Resource
                     ->label('Kelas')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('tahun_ajar')
+                    ->label('Tahun Ajar')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_lahir')
                     ->label('Tanggal Lahir')
                     ->date('d/m/Y')
@@ -296,12 +305,11 @@ class StudentResource extends Resource
                     ->sortable()
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('jenis_kelamin')
-                    ->label('Jenis Kelamin')
-                    ->options([
-                        'L' => 'Laki-laki',
-                        'P' => 'Perempuan',
-                    ]),
+                Tables\Filters\SelectFilter::make('tahun_ajar')
+                    ->label('Pilih Tahun Ajar')
+                    ->options(function () {
+                        return Student::distinct('tahun_ajar')->pluck('tahun_ajar', 'tahun_ajar')->toArray();
+                    }),
                 Tables\Filters\SelectFilter::make('kelas_saat_ini')
                     ->label('Kelas')
                     ->options(function () {
