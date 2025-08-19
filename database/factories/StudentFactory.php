@@ -44,6 +44,7 @@ class StudentFactory extends Factory
             'wali_nik' => null,
 
             'kelas_saat_ini' => $this->faker->randomElement(['7A', '7B', '8A', '8B']),
+            'tahun_ajar' => $this->faker->numberBetween(2019, 2025)
         ];
     }
 }
