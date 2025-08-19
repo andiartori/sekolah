@@ -41,6 +41,7 @@ class Student extends Model
         'wali_penghasilan',
         'wali_nik',
         'kelas_saat_ini',
+        'tahun_ajar',
     ];
 
     protected $casts = [
