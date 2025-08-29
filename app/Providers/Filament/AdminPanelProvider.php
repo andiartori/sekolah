@@ -75,6 +75,14 @@ class AdminPanelProvider extends PanelProvider
                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
         ]);
 
+        // Add Dashboard first
+        $builder->group('Teacher', [
+            NavigationItem::make('Teacher')
+                ->icon('heroicon-o-user')
+                ->url('/admin/teachers')
+                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+        ]);
+
         // Get all academic years and create single collapsible group
         $academicYears = Student::distinct('tahun_ajar')
             ->orderBy('tahun_ajar', 'desc')
