@@ -115,6 +115,12 @@ class AdminPanelProvider extends PanelProvider
                 ->url('/admin/students'),
         ]);
 
+        $builder->group('Monitor', [
+            NavigationItem::make('Log')
+                ->icon('heroicon-o-users')
+                ->url('/admin/activity-logs'),
+        ]);
+
         return $builder;
     }
 }
