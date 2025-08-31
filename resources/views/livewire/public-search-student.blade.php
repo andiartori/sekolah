@@ -42,33 +42,10 @@
                         <tbody>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Nama</td><td class="border border-gray-300 p-3">{{ $student->nama }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NIPD</td><td class="border border-gray-300 p-3">{{ $student->nipd }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Jenis Kelamin</td><td class="border border-gray-300 p-3">{{ $student->jenis_kelamin }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NISN</td><td class="border border-gray-300 p-3">{{ $student->nisn }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Tempat, Tanggal Lahir</td><td class="border border-gray-300 p-3">{{ $student->tempat_lahir }}, {{ $student->tanggal_lahir->format('d-m-Y') }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NIK</td><td class="border border-gray-300 p-3">{{ $student->nik }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Agama</td><td class="border border-gray-300 p-3">{{ $student->agama }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Alamat</td><td class="border border-gray-300 p-3">{{ $student->alamat }}, RT {{ $student->rt }}/RW {{ $student->rw }}, {{ $student->kecamatan }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Kelas Saat Ini</td><td class="border border-gray-300 p-3">{{ $student->kelas_saat_ini }}</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h3 class="text-xl font-bold mt-8 mb-4 text-center text-white">Data Orang Tua / Wali</h3>
-                    <table class="table-auto w-full border-collapse border border-gray-300">
-                        <tbody>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Ayah</td><td class="border border-gray-300 p-3">{{ $student->ayah_nama }} ({{ $student->ayah_tahun_lahir }})</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pendidikan Ayah</td><td class="border border-gray-300 p-3">{{ $student->ayah_pendidikan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pekerjaan Ayah</td><td class="border border-gray-300 p-3">{{ $student->ayah_pekerjaan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Penghasilan Ayah</td><td class="border border-gray-300 p-3">{{ $student->formatted_ayah_penghasilan }}</td></tr>
-
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Ibu</td><td class="border border-gray-300 p-3">{{ $student->ibu_nama }} ({{ $student->ibu_tahun_lahir }})</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pendidikan Ibu</td><td class="border border-gray-300 p-3">{{ $student->ibu_pendidikan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pekerjaan Ibu</td><td class="border border-gray-300 p-3">{{ $student->ibu_pekerjaan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Penghasilan Ibu</td><td class="border border-gray-300 p-3">{{ $student->formatted_ibu_penghasilan }}</td></tr>
-
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Wali</td><td class="border border-gray-300 p-3">{{ $student->wali_nama }} ({{ $student->wali_tahun_lahir }})</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pendidikan Wali</td><td class="border border-gray-300 p-3">{{ $student->wali_pendidikan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Pekerjaan Wali</td><td class="border border-gray-300 p-3">{{ $student->wali_pekerjaan }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Penghasilan Wali</td><td class="border border-gray-300 p-3">{{ $student->formatted_wali_penghasilan }}</td></tr>
                         </tbody>
                     </table>
                     

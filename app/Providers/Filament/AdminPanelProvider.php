@@ -76,8 +76,8 @@ class AdminPanelProvider extends PanelProvider
         ]);
 
         // Add Dashboard first
-        $builder->group('Teacher', [
-            NavigationItem::make('Teacher')
+        $builder->group('Guru', [
+            NavigationItem::make('Manajemen Guru')
                 ->icon('heroicon-o-user')
                 ->url('/admin/teachers')
                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
@@ -85,32 +85,32 @@ class AdminPanelProvider extends PanelProvider
 
         // Add Dashboard first
         $builder->group('Download', [
-            NavigationItem::make('Download')
+            NavigationItem::make('Manajemen Download')
                 ->icon('heroicon-o-link')
                 ->url('/admin/downloads')
                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
         ]);
 
         // Get all academic years and create single collapsible group
-        $academicYears = Student::distinct('tahun_ajar')
-            ->orderBy('tahun_ajar', 'desc')
-            ->pluck('tahun_ajar');
+        // $academicYears = Student::distinct('tahun_ajar')
+        //     ->orderBy('tahun_ajar', 'desc')
+        //     ->pluck('tahun_ajar');
 
-        $tahunAjaranItems = [];
-        foreach ($academicYears as $year) {
-            $studentCount = Student::where('tahun_ajar', $year)->count();
+        // $tahunAjaranItems = [];
+        // foreach ($academicYears as $year) {
+        //     $studentCount = Student::where('tahun_ajar', $year)->count();
 
-            $tahunAjaranItems[] = NavigationItem::make("Data Siswa {$year}")
-                ->icon('heroicon-o-academic-cap')
-                ->url("/admin/students?tableFilters[tahun_ajar][value]={$year}")
-                ->badge($studentCount);
-        }
+        //     $tahunAjaranItems[] = NavigationItem::make("Data Siswa {$year}")
+        //         ->icon('heroicon-o-academic-cap')
+        //         ->url("/admin/students?tableFilters[tahun_ajar][value]={$year}")
+        //         ->badge($studentCount);
+        // }
 
-        $builder->group('Tahun Ajaran', $tahunAjaranItems);
+        // $builder->group(group: 'Tahun Ajaran', $tahunAjaranItems);
 
         // Add management group
         $builder->group('Manajemen', [
-            NavigationItem::make('Semua Data Siswa')
+            NavigationItem::make('Data Siswa')
                 ->icon('heroicon-o-users')
                 ->url('/admin/students'),
         ]);

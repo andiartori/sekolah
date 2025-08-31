@@ -36,7 +36,7 @@ class StudentResource extends Resource
                             ->schema([
                                 Section::make('Informasi Dasar Siswa')
                                     ->schema([
-                                        Forms\Components\Grid::make(2)
+                                        Forms\Components\Grid::make(3)
                                             ->schema([
                                                 Forms\Components\TextInput::make('nama')
                                                     ->label('Nama Lengkap')
@@ -46,6 +46,15 @@ class StudentResource extends Resource
                                                     ->label('NIPD')
                                                     ->required()
                                                     ->unique(ignoreRecord: true),
+                                                Forms\Components\Radio::make('status')
+                                                    ->label('status')
+                                                    ->options([
+                                                        'Aktif' => 'Aktif',
+                                                        'Alumni' => 'Alumni',
+                                                    ])
+                                                    ->required()
+                                                    ->default('Aktif')
+                                                    ->helperText('Status siswa: Aktif atau Alumni'),
                                             ]),
 
                                         Forms\Components\Grid::make(3)
@@ -283,6 +292,14 @@ class StudentResource extends Resource
                     ->label('Kelas')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Aktif' => 'success',
+                        'Alumni' => 'warning',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('tahun_ajar')
                     ->label('Tahun Ajar')
                     ->searchable()

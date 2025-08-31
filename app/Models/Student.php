@@ -42,6 +42,7 @@ class Student extends Model
         'wali_nik',
         'kelas_saat_ini',
         'tahun_ajar',
+        'status'
     ];
 
     protected $casts = [
@@ -54,8 +55,9 @@ class Student extends Model
     // Helper method to get age
     public function getUmurAttribute()
     {
-        return $this->tanggal_lahir->diffInYears(now());
+        return \Illuminate\Support\Carbon::parse($this->tanggal_lahir)->diffInYears(now());
     }
+
 
     // Helper method to format penghasilan
     public function getFormattedAyahPenghasilanAttribute()

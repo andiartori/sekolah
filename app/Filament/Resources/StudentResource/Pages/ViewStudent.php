@@ -49,6 +49,8 @@ class ViewStudent extends ViewRecord
                                         TextEntry::make('rw')->label('RW'),
                                         TextEntry::make('kecamatan')->label('Kecamatan'),
                                         TextEntry::make('kelas_saat_ini')->label('Kelas Saat Ini'),
+                                        TextEntry::make('tahun_ajar')->label('Tahun Ajaran'),
+                                        TextEntry::make('status')->label('status'),
                                     ])->columns(2)
                             ]),
 
