@@ -77,10 +77,10 @@ class AdminPanelProvider extends PanelProvider
         // ]);
 
         // Add Dashboard first
-        $builder->group('Guru', [
-            NavigationItem::make('Manajemen Guru')
+        $builder->group('Karyawan', [
+            NavigationItem::make('Manajemen Karyawan')
                 ->icon('heroicon-o-user')
-                ->url('/admin/teachers')
+                ->url('/admin/data-karyawan')
                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
         ]);
 

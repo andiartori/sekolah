@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
-class Teacher extends Model
+class DataKaryawan extends Model
 {
     use HasFactory, LogsActivity;
+
+    protected $table = 'data_karyawan';
 
     protected $fillable = [
         'nama',
         'nomor_identitas',
-        'catatan',
+        'pangkat_gol_ruang',
+        'jabatan',
+        'tugas_mengajar',
+        'tugas_tambahan',
     ];
 
     /**

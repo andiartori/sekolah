@@ -2,25 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TeacherResource\Pages;
-use App\Models\Teacher;
+use App\Filament\Resources\DataKaryawanResource\Pages;
+use App\Models\DataKaryawan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class TeacherResource extends Resource
+class DataKaryawanResource extends Resource
 {
-    protected static ?string $model = Teacher::class;
+    protected static ?string $model = DataKaryawan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationLabel = 'Teachers';
+    protected static ?string $navigationLabel = 'Data Karyawan';
 
-    protected static ?string $modelLabel = 'Teacher';
+    protected static ?string $modelLabel = 'Data Karyawan';
 
-    protected static ?string $pluralModelLabel = 'Teachers';
+    protected static ?string $slug = 'data-karyawan';
+
+    protected static ?string $pluralModelLabel = 'Data Karyawan';
 
     public static function form(Form $form): Form
     {
@@ -30,7 +32,7 @@ class TeacherResource extends Resource
                     ->label('Nama')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Masukkan nama guru'),
+                    ->placeholder('Masukkan nama karyawan'),
 
                 Forms\Components\TextInput::make('nomor_identitas')
                     ->label('Nomor Identitas')
@@ -40,7 +42,21 @@ class TeacherResource extends Resource
                     ->placeholder('Masukkan nomor identitas')
                     ->helperText('Nomor identitas harus unik'),
 
+                Forms\Components\TextInput::make('pangkat_gol_ruang')
+                    ->label('Pangkat / Gol. Ruang')
+                    ->maxLength(255),
 
+                Forms\Components\TextInput::make('jabatan')
+                    ->label('Jabatan')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('tugas_mengajar')
+                    ->label('Tugas Mengajar')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('tugas_tambahan')
+                    ->label('Tugas Tambahan')
+                    ->maxLength(255),
             ]);
     }
 
@@ -48,7 +64,6 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama')
                     ->sortable()
@@ -60,13 +75,27 @@ class TeacherResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->copyable()
-                    ->copyMessage('Nomor identitas copied to clipboard'),
+                    ->copyMessage('Nomor identitas disalin ke clipboard'),
 
-                Tables\Columns\TextColumn::make('catatan')
-                    ->label('Catatan')
+                Tables\Columns\TextColumn::make('pangkat_gol_ruang')
+                    ->label('Pangkat / Gol. Ruang')
                     ->sortable()
                     ->searchable(),
 
+                Tables\Columns\TextColumn::make('jabatan')
+                    ->label('Jabatan')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('tugas_mengajar')
+                    ->label('Tugas Mengajar')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('tugas_tambahan')
+                    ->label('Tugas Tambahan')
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
@@ -125,10 +154,10 @@ class TeacherResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTeachers::route('/'),
-            'create' => Pages\CreateTeacher::route('/create'),
-            'view' => Pages\ViewTeacher::route('/{record}'),
-            'edit' => Pages\EditTeacher::route('/{record}/edit'),
+            'index' => Pages\ListDataKaryawan::route('/'),
+            'create' => Pages\CreateDataKaryawan::route('/create'),
+            'view' => Pages\ViewDataKaryawan::route('/{record}'),
+            'edit' => Pages\EditDataKaryawan::route('/{record}/edit'),
         ];
     }
 }
