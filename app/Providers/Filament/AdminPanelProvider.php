@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('SDN CIPINANG MELAYU 07')
             ->sidebarWidth('15rem')
             ->colors([
                 'primary' => Color::Amber,
@@ -68,12 +69,12 @@ class AdminPanelProvider extends PanelProvider
     protected function buildCustomNavigation(NavigationBuilder $builder): NavigationBuilder
     {
         // Add Dashboard first
-        $builder->group('Dashboard', [
-            NavigationItem::make('Dashboard')
-                ->icon('heroicon-o-home')
-                ->url('/admin')
-                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
-        ]);
+        // $builder->group('Dashboard', [
+        //     NavigationItem::make('Dashboard')
+        //         ->icon('heroicon-o-home')
+        //         ->url('/admin')
+        //         ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+        // ]);
 
         // Add Dashboard first
         $builder->group('Guru', [
