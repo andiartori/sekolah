@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Student extends Model
 {
@@ -51,6 +53,15 @@ class Student extends Model
         'ibu_penghasilan' => 'integer',
         'wali_penghasilan' => 'integer',
     ];
+
+    // 🔹 Configure Activity Log
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll() // log semua atribut
+            ->logOnlyDirty() // hanya log kalau ada perubahan
+            ->dontSubmitEmptyLogs(); // jangan log kalau tidak ada perubahan
+    }
 
     // Helper method to get age
     public function getUmurAttribute()

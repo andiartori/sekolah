@@ -91,6 +91,8 @@ class AdminPanelProvider extends PanelProvider
                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
         ]);
 
+
+
         // Get all academic years and create single collapsible group
         // $academicYears = Student::distinct('tahun_ajar')
         //     ->orderBy('tahun_ajar', 'desc')
@@ -113,6 +115,20 @@ class AdminPanelProvider extends PanelProvider
             NavigationItem::make('Data Siswa')
                 ->icon('heroicon-o-users')
                 ->url('/admin/students'),
+        ]);
+
+        //Informasi Alumni
+        $builder->group('Alumni', [
+            NavigationItem::make('Informasi Alumni')
+                ->icon('heroicon-o-link')
+                ->url('/admin/students/alumni')
+                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+        ]);
+
+        $builder->group('Monitor', [
+            NavigationItem::make('Log')
+                ->icon('heroicon-o-users')
+                ->url('/admin/activity-logs'),
         ]);
 
         return $builder;
