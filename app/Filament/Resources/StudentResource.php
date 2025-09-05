@@ -360,6 +360,7 @@ class StudentResource extends Resource
         return [
             'index' => Pages\ListStudents::route('/'),
             'create' => Pages\CreateStudent::route('/create'),
+            'alumni' => Pages\ListAlumniStudents::route('/alumni'),  // Move this BEFORE view and edit
             'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
