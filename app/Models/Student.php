@@ -9,7 +9,7 @@ use Spatie\Activitylog\LogOptions;
 
 class Student extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'nama',

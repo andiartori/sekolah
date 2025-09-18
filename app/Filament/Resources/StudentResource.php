@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Tabs;
+use App\Exports\StudentsExport; // Add this line
 
 class StudentResource extends Resource
 {
@@ -343,7 +344,32 @@ class StudentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    // Simple Excel export for selected records
+                    Tables\Actions\BulkAction::make('export_selected')
+                        ->label('Export Excel')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success')
+                        ->action(function ($records) {
+                            return \Maatwebsite\Excel\Facades\Excel::download(
+                                new StudentsExport($records),
+                                'selected-students-' . date('Y-m-d') . '.xlsx'
+                            );
+                        }),
                 ]),
+            ])
+            ->headerActions([
+                // Export all data action
+                Tables\Actions\Action::make('export_all')
+                    ->label('Export Semua Data')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->action(function () {
+                        $students = Student::all();
+                        return \Maatwebsite\Excel\Facades\Excel::download(
+                            new StudentsExport($students),
+                            'data-siswa-' . date('Y-m-d') . '.xlsx'
+                        );
+                    }),
             ])
             ->defaultSort('nama', 'asc');
     }
