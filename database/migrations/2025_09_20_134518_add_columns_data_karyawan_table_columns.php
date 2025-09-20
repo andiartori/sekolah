@@ -11,7 +11,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('data_karyawan', function (Blueprint $table) {
-            $table->string('is_verified')->after('tugas_tambahan')->nullable();
+            // Skip is_verified since it already exists
+            if (!Schema::hasColumn('data_karyawan', 'is_verified')) {
+                $table->string('is_verified')->nullable();
+            }
+
+            // Add any other columns you need here
         });
     }
 

@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('data_karyawan', function (Blueprint $table) {
-            $table->renameColumn('tugas_mengajar', 'tugas_utama');
-        });
+        // Schema::table('data_karyawan', function (Blueprint $table) {
+        //     $table->renameColumn('tugas_mengajar', 'tugas_utama');
+        // });
     }
 
     /**
