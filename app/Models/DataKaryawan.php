@@ -18,7 +18,7 @@ class DataKaryawan extends Model
         'nomor_identitas',
         'pangkat_gol_ruang',
         'jabatan',
-        'tugas_mengajar',
+        'tugas_utama',
         'tugas_tambahan',
     ];
 

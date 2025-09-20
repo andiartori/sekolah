@@ -17,8 +17,8 @@ return new class extends Migration {
         Schema::table('data_karyawan', function (Blueprint $table) {
             $table->string('pangkat_gol_ruang')->after('nomor_identitas');
             $table->string('jabatan')->after('pangkat_gol_ruang');
-            $table->string('tugas_mengajar')->after('jabatan')->nullable();
-            $table->string('tugas_tambahan')->after('tugas_mengajar')->nullable();
+            $table->string('tugas_utama')->after('jabatan')->nullable();
+            $table->string('tugas_tambahan')->after('tugas_utama')->nullable();
             $table->dropColumn('catatan');
         });
     }

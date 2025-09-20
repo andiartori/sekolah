@@ -31,7 +31,7 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Tabs::make('Student Information')
+                Tabs::make('Informasi Siswa')
                     ->tabs([
                         Tabs\Tab::make('Data Pribadi')
                             ->schema([
@@ -39,12 +39,16 @@ class StudentResource extends Resource
                                     ->schema([
                                         Forms\Components\Grid::make(3)
                                             ->schema([
-                                                Forms\Components\TextInput::make('nama')
+                                                Forms\Components\TextInput::make('nama_murid')
                                                     ->label('Nama Lengkap')
                                                     ->required()
                                                     ->maxLength(255),
-                                                Forms\Components\TextInput::make('nipd')
-                                                    ->label('NIPD')
+                                                Forms\Components\TextInput::make('no_induk')
+                                                    ->label('Nomor Induk')
+                                                    ->required()
+                                                    ->unique(ignoreRecord: true),
+                                                Forms\Components\TextInput::make('no_nisn')
+                                                    ->label('Nomor NISN')
                                                     ->required()
                                                     ->unique(ignoreRecord: true),
                                                 Forms\Components\Radio::make('status')
@@ -67,199 +71,41 @@ class StudentResource extends Resource
                                                         'P' => 'Perempuan',
                                                     ])
                                                     ->required(),
-                                                Forms\Components\TextInput::make('nisn')
-                                                    ->label('NISN')
-                                                    ->required()
-                                                    ->unique(ignoreRecord: true),
-                                                Forms\Components\TextInput::make('nik')
-                                                    ->label('NIK')
-                                                    ->required()
-                                                    ->unique(ignoreRecord: true),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
                                                 Forms\Components\TextInput::make('tempat_lahir')
                                                     ->label('Tempat Lahir')
                                                     ->required(),
                                                 Forms\Components\DatePicker::make('tanggal_lahir')
-                                                    ->label('Tanggal Lahir')
+                                                    ->label('Tanggal Kelahiran')
                                                     ->required()
                                                     ->displayFormat('d/m/Y'),
                                             ]),
 
-                                        Forms\Components\TextInput::make('agama')
-                                            ->label('Agama')
-                                            ->required(),
-
-                                        Forms\Components\Textarea::make('alamat')
-                                            ->label('Alamat')
-                                            ->required()
-                                            ->rows(3),
-
                                         Forms\Components\Grid::make(3)
                                             ->schema([
-                                                Forms\Components\TextInput::make('rt')
-                                                    ->label('RT')
+                                                Forms\Components\TextInput::make('kelas')
+                                                    ->label('Kelas Saat Ini')
                                                     ->required(),
-                                                Forms\Components\TextInput::make('rw')
-                                                    ->label('RW')
+                                                Forms\Components\TextInput::make('tahun_ajar')
+                                                    ->label('Tahun Ajaran')
                                                     ->required(),
-                                                Forms\Components\TextInput::make('kecamatan')
-                                                    ->label('Kecamatan')
+                                                Forms\Components\TextInput::make('tahun_lulus')
+                                                    ->label('Tahun Kelulusan')
+
+                                            ]),
+                                        Forms\Components\Grid::make(2)
+                                            ->schema([
+                                                Forms\Components\TextInput::make('nama_ibu')
+                                                    ->label('Nama Ibu')
                                                     ->required(),
+                                                Forms\Components\TextInput::make('kontak_ibu')
+                                                    ->label('Kontak Ibu')
+                                                    ->tel()
+                                                    ->maxLength(255),
                                             ]),
 
-                                        Forms\Components\TextInput::make('kelas_saat_ini')
-                                            ->label('Kelas Saat Ini')
-                                            ->required(),
-                                        Forms\Components\TextInput::make('tahun_ajar')
-                                            ->label('Tahun Ajaran')
-                                            ->required(),
                                     ])
                             ]),
 
-                        Tabs\Tab::make('Data Ayah')
-                            ->schema([
-                                Section::make('Informasi Ayah')
-                                    ->schema([
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('ayah_nama')
-                                                    ->label('Nama Ayah'),
-                                                Forms\Components\TextInput::make('ayah_tahun_lahir')
-                                                    ->label('Tahun Lahir')
-                                                    ->numeric()
-                                                    ->minValue(1900)
-                                                    ->maxValue(date('Y')),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\Select::make('ayah_pendidikan')
-                                                    ->label('Jenjang Pendidikan')
-                                                    ->options([
-                                                        'TK' => 'TK',
-                                                        'SD' => 'SD',
-                                                        'SMP' => 'SMP',
-                                                        'SMA' => 'SMA',
-                                                        'D1' => 'D1',
-                                                        'D3' => 'D3',
-                                                        'D4' => 'D4',
-                                                        'S1' => 'S1',
-                                                        'S2' => 'S2',
-                                                        'S3' => 'S3',
-                                                    ]),
-                                                Forms\Components\TextInput::make('ayah_pekerjaan')
-                                                    ->label('Pekerjaan'),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('ayah_penghasilan')
-                                                    ->label('Penghasilan')
-                                                    ->numeric()
-                                                    ->prefix('Rp'),
-                                                Forms\Components\TextInput::make('ayah_nik')
-                                                    ->label('NIK Ayah'),
-                                            ]),
-                                    ])
-                            ]),
-
-                        Tabs\Tab::make('Data Ibu')
-                            ->schema([
-                                Section::make('Informasi Ibu')
-                                    ->schema([
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('ibu_nama')
-                                                    ->label('Nama Ibu'),
-                                                Forms\Components\TextInput::make('ibu_tahun_lahir')
-                                                    ->label('Tahun Lahir')
-                                                    ->numeric()
-                                                    ->minValue(1900)
-                                                    ->maxValue(date('Y')),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\Select::make('ibu_pendidikan')
-                                                    ->label('Jenjang Pendidikan')
-                                                    ->options([
-                                                        'TK' => 'TK',
-                                                        'SD' => 'SD',
-                                                        'SMP' => 'SMP',
-                                                        'SMA' => 'SMA',
-                                                        'D1' => 'D1',
-                                                        'D3' => 'D3',
-                                                        'D4' => 'D4',
-                                                        'S1' => 'S1',
-                                                        'S2' => 'S2',
-                                                        'S3' => 'S3',
-                                                    ]),
-                                                Forms\Components\TextInput::make('ibu_pekerjaan')
-                                                    ->label('Pekerjaan'),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('ibu_penghasilan')
-                                                    ->label('Penghasilan')
-                                                    ->numeric()
-                                                    ->prefix('Rp'),
-                                                Forms\Components\TextInput::make('ibu_nik')
-                                                    ->label('NIK Ibu'),
-                                            ]),
-                                    ])
-                            ]),
-
-                        Tabs\Tab::make('Data Wali')
-                            ->schema([
-                                Section::make('Informasi Wali')
-                                    ->description('Isi jika siswa tinggal dengan wali')
-                                    ->schema([
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('wali_nama')
-                                                    ->label('Nama Wali'),
-                                                Forms\Components\TextInput::make('wali_tahun_lahir')
-                                                    ->label('Tahun Lahir')
-                                                    ->numeric()
-                                                    ->minValue(1900)
-                                                    ->maxValue(date('Y')),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\Select::make('wali_pendidikan')
-                                                    ->label('Jenjang Pendidikan')
-                                                    ->options([
-                                                        'TK' => 'TK',
-                                                        'SD' => 'SD',
-                                                        'SMP' => 'SMP',
-                                                        'SMA' => 'SMA',
-                                                        'D1' => 'D1',
-                                                        'D3' => 'D3',
-                                                        'D4' => 'D4',
-                                                        'S1' => 'S1',
-                                                        'S2' => 'S2',
-                                                        'S3' => 'S3',
-                                                    ]),
-                                                Forms\Components\TextInput::make('wali_pekerjaan')
-                                                    ->label('Pekerjaan'),
-                                            ]),
-
-                                        Forms\Components\Grid::make(2)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('wali_penghasilan')
-                                                    ->label('Penghasilan')
-                                                    ->numeric()
-                                                    ->prefix('Rp'),
-                                                Forms\Components\TextInput::make('wali_nik')
-                                                    ->label('NIK Wali'),
-                                            ]),
-                                    ])
-                            ]),
                     ])
                     ->columnSpanFull()
             ]);
@@ -269,28 +115,16 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nipd')
-                    ->label('NIPD')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('nama')
+                Tables\Columns\TextColumn::make('nama_murid')
                     ->label('Nama Lengkap')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('nisn')
-                    ->label('NISN')
+                Tables\Columns\TextColumn::make('no_induk')
+                    ->label('Nomor Induk')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('jenis_kelamin')
-                    ->label('L/P')
-                    ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'L' => 'info',
-                        'P' => 'success',
-                    }),
-                Tables\Columns\TextColumn::make('kelas_saat_ini')
-                    ->label('Kelas')
+                Tables\Columns\TextColumn::make('no_nisn')
+                    ->label('Nomor NISN')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
@@ -301,38 +135,66 @@ class StudentResource extends Resource
                         'Alumni' => 'warning',
                         default => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('tahun_ajar')
-                    ->label('Tahun Ajar')
+                Tables\Columns\TextColumn::make('jenis_kelamin')
+                    ->label('L/P')
+                    ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'L' => 'info',
+                        'P' => 'success',
+                    }),
+                Tables\Columns\TextColumn::make('tempat_lahir')
+                    ->label('Tempat Lahir')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_lahir')
                     ->label('Tanggal Lahir')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tempat_lahir')
-                    ->label('Tempat Lahir')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('agama')
-                    ->label('Agama'),
-                Tables\Columns\TextColumn::make('alamat')
-                    ->label('Alamat')
-                    ->limit(50),
+                Tables\Columns\TextColumn::make('kelas')
+                    ->label('Kelas Saat ini')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('tahun_ajar')
+                    ->label('Tahun Ajar')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('tahun_lulus')
+                    ->label('Tahun Lulus')
+                    ->searchable()
+                    ->sortable()
+                    ->getStateUsing(function ($record) {
+                        return $record->tahun_lulus ?? 'Belum Lulus';
+                    })
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->tahun_lulus ? 'success' : 'gray';
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('nama_ibu')
+                    ->label('Nama Ibu')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('kontak_ibu')
+                    ->label('Kontak Ibu')
+                    ->searchable()
+                    ->sortable(),
             ])
+
             ->filters([
                 Tables\Filters\SelectFilter::make('tahun_ajar')
                     ->label('Pilih Tahun Ajar')
                     ->options(function () {
                         return Student::distinct('tahun_ajar')->pluck('tahun_ajar', 'tahun_ajar')->toArray();
                     }),
-                Tables\Filters\SelectFilter::make('kelas_saat_ini')
+                Tables\Filters\SelectFilter::make('kelas')
                     ->label('Kelas')
                     ->options(function () {
-                        return Student::distinct('kelas_saat_ini')
-                            ->pluck('kelas_saat_ini', 'kelas_saat_ini')
+                        return Student::distinct('kelas')
+                            ->pluck('kelas', 'kelas')
                             ->toArray();
                     }),
             ])
@@ -371,7 +233,7 @@ class StudentResource extends Resource
                         );
                     }),
             ])
-            ->defaultSort('nama', 'asc');
+            ->defaultSort('nama_murid', 'asc');
     }
 
     public static function getRelations(): array

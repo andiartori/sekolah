@@ -37,40 +37,20 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
     public function headings(): array
     {
         return [
-            'NIPD',
+            'Nomor Induk',
             'Nama Lengkap',
-            'NISN',
-            'NIK',
+            'Nomor NISN',
             'Jenis Kelamin',
             'Tempat Lahir',
             'Tanggal Lahir',
-            'Agama',
-            'Alamat',
-            'RT',
-            'RW',
-            'Kecamatan',
             'Kelas Saat Ini',
             'Tahun Ajaran',
+            'Tahun Kelulusan',
             'Status',
-            'Nama Ayah',
-            'Tahun Lahir Ayah',
-            'Pendidikan Ayah',
-            'Pekerjaan Ayah',
-            'Penghasilan Ayah',
-            'NIK Ayah',
             'Nama Ibu',
-            'Tahun Lahir Ibu',
-            'Pendidikan Ibu',
-            'Pekerjaan Ibu',
-            'Penghasilan Ibu',
-            'NIK Ibu',
-            'Nama Wali',
-            'Tahun Lahir Wali',
-            'Pendidikan Wali',
-            'Pekerjaan Wali',
-            'Penghasilan Wali',
-            'NIK Wali',
-            'Tanggal Dibuat'
+            'Kontak Ibu',
+            'Tanggal Dibuat',
+            'Terakhir Diperbarui'
         ];
     }
 
@@ -80,40 +60,20 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
     public function map($student): array
     {
         return [
-            $student->nipd,
-            $student->nama,
-            $student->nisn,
-            $student->nik,
+            $student->no_induk,
+            $student->nama_murid,
+            $student->no_nisn,
             $student->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan',
             $student->tempat_lahir,
             $student->tanggal_lahir ? $student->tanggal_lahir->format('d/m/Y') : '',
-            $student->agama,
-            $student->alamat,
-            $student->rt,
-            $student->rw,
-            $student->kecamatan,
-            $student->kelas_saat_ini,
+            $student->kelas,
             $student->tahun_ajar,
+            $student->tahun_lulus ?? 'Belum Lulus',
             $student->status,
-            $student->ayah_nama,
-            $student->ayah_tahun_lahir,
-            $student->ayah_pendidikan,
-            $student->ayah_pekerjaan,
-            $student->ayah_penghasilan ? 'Rp ' . number_format($student->ayah_penghasilan, 0, ',', '.') : '',
-            $student->ayah_nik,
-            $student->ibu_nama,
-            $student->ibu_tahun_lahir,
-            $student->ibu_pendidikan,
-            $student->ibu_pekerjaan,
-            $student->ibu_penghasilan ? 'Rp ' . number_format($student->ibu_penghasilan, 0, ',', '.') : '',
-            $student->ibu_nik,
-            $student->wali_nama,
-            $student->wali_tahun_lahir,
-            $student->wali_pendidikan,
-            $student->wali_pekerjaan,
-            $student->wali_penghasilan ? 'Rp ' . number_format($student->wali_penghasilan, 0, ',', '.') : '',
-            $student->wali_nik,
-            $student->created_at->format('d/m/Y H:i:s'),
+            $student->nama_ibu,
+            $student->kontak_ibu,
+            $student->created_at ? $student->created_at->format('d/m/Y H:i:s') : '',
+            $student->updated_at ? $student->updated_at->format('d/m/Y H:i:s') : '',
         ];
     }
 
@@ -124,7 +84,9 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
     {
         return [
             // Style the first row as bold
-            1 => ['font' => ['bold' => true]],
+            1 => ['font' => ['bold' => true, 'size' => 12]],
+            // Auto-fit columns
+            'A:N' => ['alignment' => ['horizontal' => 'left']],
         ];
     }
 }

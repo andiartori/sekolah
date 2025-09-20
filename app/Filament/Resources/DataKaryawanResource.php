@@ -50,8 +50,8 @@ class DataKaryawanResource extends Resource
                     ->label('Jabatan')
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('tugas_mengajar')
-                    ->label('Tugas Mengajar')
+                Forms\Components\TextInput::make('tugas_utama')
+                    ->label('Tugas Utama')
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('tugas_tambahan')
@@ -87,8 +87,8 @@ class DataKaryawanResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('tugas_mengajar')
-                    ->label('Tugas Mengajar')
+                Tables\Columns\TextColumn::make('tugas_utama')
+                    ->label('Tugas Utama')
                     ->sortable()
                     ->searchable(),
 

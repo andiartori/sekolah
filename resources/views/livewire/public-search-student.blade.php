@@ -6,10 +6,15 @@
                 Admin Login
             </a>
         </div>
+
     </nav>
 
     <!-- Main Content -->
-    <div class="flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center">
+<div class="w-32 h-32"> <!-- or whatever size you want -->
+    <img class="w-full h-full object-contain" src="{{ asset('logo.png') }}" alt="Logo">
+</div>
+
         <div class="w-3/4 mx-auto p-12 space-y-6 rounded-lg">
             <h1 class="text-3xl text-white font-bold text-center">Kolom Pencarian Data Murid</h1>
             
@@ -24,7 +29,7 @@
             <form wire:submit.prevent="search" class="space-y-4 p-4 shadow">
                 <div>
                     <label class="block text-lg font-medium text-white">Nama Lengkap</label>
-                    <input required type="text" wire:model="nama" class="border p-2 w-full rounded border-green-600 text-white bg-transparent">
+                    <input required type="text" wire:model="nama_murid" class="border p-2 w-full rounded border-green-600 text-white bg-transparent">
                 </div>
                 <div>
                     <label class="block text-lg font-medium text-white">Tanggal Lahir Murid</label>
@@ -40,12 +45,11 @@
                     <h2 class="text-2xl font-bold mb-6 text-center text-white">Data Siswa</h2>
                     <table class="table-auto w-full border-collapse border border-gray-300">
                         <tbody>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Nama</td><td class="border border-gray-300 p-3">{{ $student->nama }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NIPD</td><td class="border border-gray-300 p-3">{{ $student->nipd }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NISN</td><td class="border border-gray-300 p-3">{{ $student->nisn }}</td></tr>
+                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Nama</td><td class="border border-gray-300 p-3">{{ $student->nama_murid }}</td></tr>
+                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Nomor Induk</td><td class="border border-gray-300 p-3">{{ $student->no_induk }}</td></tr>
+                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Nomor NISN</td><td class="border border-gray-300 p-3">{{ $student->no_nisn }}</td></tr>
                             <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Tempat, Tanggal Lahir</td><td class="border border-gray-300 p-3">{{ $student->tempat_lahir }}, {{ $student->tanggal_lahir->format('d-m-Y') }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">NIK</td><td class="border border-gray-300 p-3">{{ $student->nik }}</td></tr>
-                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Kelas Saat Ini</td><td class="border border-gray-300 p-3">{{ $student->kelas_saat_ini }}</td></tr>
+                            <tr><td class="border border-gray-300 p-3 font-semibold bg-gray-100/20">Kelas Saat Ini</td><td class="border border-gray-300 p-3">{{ $student->kelas }}</td></tr>
                         </tbody>
                     </table>
                     
@@ -53,7 +57,7 @@
                         <button wire:click="$set('student', null)" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Cari Lagi</button>
                     </div>
                 </div>
-            @elseif($nama || $tanggal_lahir)
+            @elseif($nama_murid || $tanggal_lahir)
                 <div class="bg-red-100/90 text-red-800 p-4 rounded border border-red-300">
                     <p class="text-center font-semibold">⚠️ Tidak ada siswa ditemukan dengan data yang Anda masukkan.</p>
                     <p class="text-center text-sm mt-2">Pastikan nama lengkap dan tanggal lahir sudah benar.</p>
