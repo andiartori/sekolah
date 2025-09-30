@@ -37,6 +37,7 @@ class DataKaryawanResource extends Resource
                 Forms\Components\TextInput::make('nomor_identitas')
                     ->label('Nomor Identitas')
                     ->required()
+                    ->numeric()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->placeholder('Masukkan nomor identitas')
@@ -57,6 +58,12 @@ class DataKaryawanResource extends Resource
                 Forms\Components\TextInput::make('tugas_tambahan')
                     ->label('Tugas Tambahan')
                     ->maxLength(255),
+
+                Forms\Components\Toggle::make('is_pengajar')
+                    ->label('Pengajar (Jika Pengajar, Aktifkan)')
+                    ->onColor('success')
+                    ->offColor('secondary')
+                    ->default(false),
             ]);
     }
 
@@ -156,8 +163,11 @@ class DataKaryawanResource extends Resource
         return [
             'index' => Pages\ListDataKaryawan::route('/'),
             'create' => Pages\CreateDataKaryawan::route('/create'),
+            'verifikasi' => Pages\ListVerifikasiKaryawan::route('/verifikasi'), // MOVED BEFORE {record} routes
             'view' => Pages\ViewDataKaryawan::route('/{record}'),
             'edit' => Pages\EditDataKaryawan::route('/{record}/edit'),
+
         ];
+
     }
 }

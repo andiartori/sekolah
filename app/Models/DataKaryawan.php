@@ -20,6 +20,8 @@ class DataKaryawan extends Model
         'jabatan',
         'tugas_utama',
         'tugas_tambahan',
+        'is_pengajar',
+        'is_verified'
     ];
 
     /**

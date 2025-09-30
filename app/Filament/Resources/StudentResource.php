@@ -46,10 +46,12 @@ class StudentResource extends Resource
                                                 Forms\Components\TextInput::make('no_induk')
                                                     ->label('Nomor Induk')
                                                     ->required()
+                                                    ->numeric()
                                                     ->unique(ignoreRecord: true),
                                                 Forms\Components\TextInput::make('no_nisn')
                                                     ->label('Nomor NISN')
                                                     ->required()
+                                                    ->numeric()
                                                     ->unique(ignoreRecord: true),
                                                 Forms\Components\Radio::make('status')
                                                     ->label('status')
@@ -84,6 +86,7 @@ class StudentResource extends Resource
                                             ->schema([
                                                 Forms\Components\TextInput::make('kelas')
                                                     ->label('Kelas Saat Ini')
+                                                    ->helperText('Format: [Nomor Kelas][Huruf Kelas Kapital], contoh: 4A, 2B, 1A')
                                                     ->required(),
                                                 Forms\Components\TextInput::make('tahun_ajar')
                                                     ->label('Tahun Ajaran')

@@ -22,7 +22,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -41,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,  // Your custom dashboard
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -69,51 +68,30 @@ class AdminPanelProvider extends PanelProvider
 
     protected function buildCustomNavigation(NavigationBuilder $builder): NavigationBuilder
     {
-        // Add Dashboard first
-        // $builder->group('Dashboard', [
-        //     NavigationItem::make('Dashboard')
-        //         ->icon('heroicon-o-home')
-        //         ->url('/admin')
-        //         ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
-        // ]);
+        // Add Dashboard first - UNCOMMENTED
+        $builder->group('Dashboard', [
+            NavigationItem::make('Dashboard')
+                ->icon('heroicon-o-home')
+                ->url('/admin')
+                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+        ]);
 
-        // Add Dashboard first
+        // Add Karyawan group
         $builder->group('Karyawan', [
-            NavigationItem::make('Manajemen Karyawan')
+            NavigationItem::make('Data Karyawan')
                 ->icon('heroicon-o-user')
-                ->url('/admin/data-karyawan')
-                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+                ->url('/admin/data-karyawan'),
         ]);
 
-        // Add Dashboard first
+        // Add Download group
         $builder->group('Download', [
-            NavigationItem::make('Manajemen Download')
+            NavigationItem::make('Data Download')
                 ->icon('heroicon-o-link')
-                ->url('/admin/downloads')
-                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+                ->url('/admin/downloads'),
         ]);
-
-
-
-        // Get all academic years and create single collapsible group
-        // $academicYears = Student::distinct('tahun_ajar')
-        //     ->orderBy('tahun_ajar', 'desc')
-        //     ->pluck('tahun_ajar');
-
-        // $tahunAjaranItems = [];
-        // foreach ($academicYears as $year) {
-        //     $studentCount = Student::where('tahun_ajar', $year)->count();
-
-        //     $tahunAjaranItems[] = NavigationItem::make("Data Siswa {$year}")
-        //         ->icon('heroicon-o-academic-cap')
-        //         ->url("/admin/students?tableFilters[tahun_ajar][value]={$year}")
-        //         ->badge($studentCount);
-        // }
-
-        // $builder->group(group: 'Tahun Ajaran', $tahunAjaranItems);
 
         // Add management group
-        $builder->group('Manajemen', [
+        $builder->group('Siswa', [
             NavigationItem::make('Data Siswa')
                 ->icon('heroicon-o-users')
                 ->url('/admin/students'),
@@ -121,16 +99,23 @@ class AdminPanelProvider extends PanelProvider
 
         //Informasi Alumni
         $builder->group('Alumni', [
-            NavigationItem::make('Informasi Alumni')
+            NavigationItem::make('Data Alumni')
                 ->icon('heroicon-o-link')
-                ->url('/admin/students/alumni')
-                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard')),
+                ->url('/admin/students/alumni'),
         ]);
 
         $builder->group('Monitor', [
             NavigationItem::make('Log')
                 ->icon('heroicon-o-users')
                 ->url('/admin/activity-logs'),
+        ]);
+
+        $builder->group('Verifikasi', [
+            NavigationItem::make('Verifikasi Data Siswa')
+                ->icon('heroicon-o-check-badge')
+                ->url('/admin/data-karyawan/verifikasi')
+                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.data-karyawan.verifikasi'))
+                ->badge(fn() => \App\Models\DataKaryawan::where('is_verified', false)->count())
         ]);
 
         return $builder;

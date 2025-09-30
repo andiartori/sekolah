@@ -1,19 +1,21 @@
-<div class="bg-secondary min-h-screen w-screen">
+<div class="bg-secondary min-h-screen w-full overflow-x-hidden">
     <!-- Top Navbar -->
-    <nav class="w-full p-4">
-        <div class="flex justify-end">
+    <nav class="w-full p-4 flex justify-between">
+        <div>
+            <h2 class="text-white font-bold text-xl">SDN CIPINANG 07</h2>
+        </div>
+        <div class="flex justify-end gap-4">
             <a href="/admin/login" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
                 Admin Login
             </a>
         </div>
-
     </nav>
 
     <!-- Main Content -->
     <div class="flex flex-col items-center justify-center">
-<div class="w-32 h-32"> <!-- or whatever size you want -->
-    <img class="w-full h-full object-contain" src="{{ asset('logo.png') }}" alt="Logo">
-</div>
+        <div class="w-32 h-32">
+            <img class="w-full h-full object-contain" src="{{ asset('logo.png') }}" alt="Logo">
+        </div>
 
         <div class="w-3/4 mx-auto p-12 space-y-6 rounded-lg">
             <h1 class="text-3xl text-white font-bold text-center">Kolom Pencarian Data Murid</h1>
@@ -65,4 +67,20 @@
             @endif
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-900/50 backdrop-blur-sm mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
+                <div class="text-center md:text-left">
+                    <p class="font-semibold text-white text-base">SDN CIPINANG MELAYU 07</p>
+                    <p class="mt-1">Jl. Borobudur No.1, RT.1/RW.10, Cipinang Melayu, Kec. Makasar</p>
+                    <p>Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13620</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p>&copy; 2025 SDN Cipinang Melayu 07</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
