@@ -186,10 +186,6 @@ class StudentResource extends Resource
                     ->label('Tanggal Lahir')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kontak_ibu')
-                    ->label('Kontak Ibu')
-                    ->searchable()
-                    ->sortable(),
                 // ADD THESE NEW COLUMNS:
                 Tables\Columns\TextColumn::make('agama')
                     ->label('Agama')
@@ -221,10 +217,6 @@ class StudentResource extends Resource
                     ->color(function ($record) {
                         return $record->tahun_lulus ? 'success' : 'gray';
                     }),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('nama_ibu')
                     ->label('Nama Ibu')
                     ->searchable()
@@ -232,6 +224,10 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('kontak_ibu')
                     ->label('Kontak Ibu')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat')
+                    ->dateTime()
                     ->sortable(),
             ])
 
