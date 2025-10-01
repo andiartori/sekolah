@@ -93,6 +93,38 @@ class StudentResource extends Resource
                                                     ->required(),
                                                 Forms\Components\TextInput::make('tahun_lulus')
                                                     ->label('Tahun Kelulusan')
+                                            ]),
+                                        // ADD THESE NEW FIELDS HERE:
+                                        Forms\Components\Grid::make(2)
+                                            ->schema([
+                                                Forms\Components\Select::make('agama')
+                                                    ->label('Agama')
+                                                    ->options([
+                                                        'islam' => 'Islam',
+                                                        'katolik' => 'Katolik',
+                                                        'protestan' => 'Protestan',
+                                                        'budha' => 'Budha',
+                                                        'hindu' => 'Hindu',
+                                                    ])
+                                                    ->nullable()
+                                                    ->searchable(),
+                                                Forms\Components\Textarea::make('alamat')
+                                                    ->label('Alamat')
+                                                    ->rows(2)
+                                                    ->nullable()
+                                                    ->columnSpanFull(), // Makes it span full width
+                                            ]),
+                                        Forms\Components\Grid::make(3)
+                                            ->schema([
+                                                Forms\Components\TextInput::make('kelas')
+                                                    ->label('Kelas Saat Ini')
+                                                    ->helperText('Format: [Nomor Kelas][Huruf Kelas Kapital], contoh: 4A, 2B, 1A')
+                                                    ->required(),
+                                                Forms\Components\TextInput::make('tahun_ajar')
+                                                    ->label('Tahun Ajaran')
+                                                    ->required(),
+                                                Forms\Components\TextInput::make('tahun_lulus')
+                                                    ->label('Tahun Kelulusan')
 
                                             ]),
                                         Forms\Components\Grid::make(2)
@@ -153,6 +185,22 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_lahir')
                     ->label('Tanggal Lahir')
                     ->date('d/m/Y')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('kontak_ibu')
+                    ->label('Kontak Ibu')
+                    ->searchable()
+                    ->sortable(),
+                // ADD THESE NEW COLUMNS:
+                Tables\Columns\TextColumn::make('agama')
+                    ->label('Agama')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('alamat')
+                    ->label('Alamat')
+                    ->limit(50)
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kelas')
                     ->label('Kelas Saat ini')

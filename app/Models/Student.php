@@ -18,6 +18,8 @@ class Student extends Model
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
+        'alamat',
+        'agama',
         'kelas',
         'tahun_ajar',
         'tahun_lulus',
