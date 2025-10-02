@@ -101,8 +101,7 @@ class StudentResource extends Resource
                                                     ->label('Agama')
                                                     ->options([
                                                         'islam' => 'Islam',
-                                                        'katolik' => 'Katolik',
-                                                        'protestan' => 'Protestan',
+                                                        'kristen' => 'Kristen',
                                                         'budha' => 'Budha',
                                                         'hindu' => 'Hindu',
                                                     ])
@@ -162,14 +161,6 @@ class StudentResource extends Resource
                     ->label('Nomor NISN')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->label('Status')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'Aktif' => 'success',
-                        'Alumni' => 'warning',
-                        default => 'gray',
-                    }),
                 Tables\Columns\TextColumn::make('jenis_kelamin')
                     ->label('L/P')
                     ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan')
@@ -178,6 +169,16 @@ class StudentResource extends Resource
                         'L' => 'info',
                         'P' => 'success',
                     }),
+                Tables\Columns\TextColumn::make('agama')
+                    ->label('Agama')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('kelas')
+                    ->label('Kelas Saat ini')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tempat_lahir')
                     ->label('Tempat Lahir')
                     ->searchable()
@@ -186,22 +187,27 @@ class StudentResource extends Resource
                     ->label('Tanggal Lahir')
                     ->date('d/m/Y')
                     ->sortable(),
-                // ADD THESE NEW COLUMNS:
-                Tables\Columns\TextColumn::make('agama')
-                    ->label('Agama')
-                    ->badge()
-                    ->color('info')
-                    ->sortable()
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('alamat')
                     ->label('Alamat')
                     ->limit(50)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kelas')
-                    ->label('Kelas Saat ini')
+                Tables\Columns\TextColumn::make('nama_ibu')
+                    ->label('Nama Ibu')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('kontak_ibu')
+                    ->label('Kontak Ibu')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Aktif' => 'success',
+                        'Alumni' => 'warning',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('tahun_ajar')
                     ->label('Tahun Ajar')
                     ->searchable()
@@ -217,14 +223,6 @@ class StudentResource extends Resource
                     ->color(function ($record) {
                         return $record->tahun_lulus ? 'success' : 'gray';
                     }),
-                Tables\Columns\TextColumn::make('nama_ibu')
-                    ->label('Nama Ibu')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('kontak_ibu')
-                    ->label('Kontak Ibu')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
@@ -232,11 +230,6 @@ class StudentResource extends Resource
             ])
 
             ->filters([
-                Tables\Filters\SelectFilter::make('tahun_ajar')
-                    ->label('Pilih Tahun Ajar')
-                    ->options(function () {
-                        return Student::distinct('tahun_ajar')->pluck('tahun_ajar', 'tahun_ajar')->toArray();
-                    }),
                 Tables\Filters\SelectFilter::make('kelas')
                     ->label('Kelas')
                     ->options(function () {
@@ -244,6 +237,20 @@ class StudentResource extends Resource
                             ->pluck('kelas', 'kelas')
                             ->toArray();
                     }),
+                Tables\Filters\SelectFilter::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    ]),
+                Tables\Filters\SelectFilter::make('agama')
+                    ->label('Agama')
+                    ->options([
+                        'islam' => 'Islam',
+                        'kristen' => 'Kristen',
+                        'budha' => 'Budha',
+                        'hindu' => 'Hindu',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

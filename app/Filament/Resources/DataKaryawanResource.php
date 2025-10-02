@@ -72,7 +72,7 @@ class DataKaryawanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
-                    ->label('Nama')
+                    ->label('Nama Lengkap')
                     ->sortable()
                     ->searchable()
                     ->wrap(),
