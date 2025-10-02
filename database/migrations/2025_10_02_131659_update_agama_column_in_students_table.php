@@ -7,29 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        // First, update existing data
+        // Update existing data first
         DB::table('students')
             ->whereIn('agama', ['katolik', 'protestan'])
             ->update(['agama' => 'kristen']);
 
-        // Then, modify the enum column
-        Schema::table('students', function (Blueprint $table) {
-            $table->enum('agama', ['islam', 'kristen', 'budha', 'hindu'])
-                ->nullable()
-                ->change();
-        });
+        // No need to alter column - PostgreSQL doesn't support enum changes easily
+        // Validation will be handled at application level (Filament)
     }
 
     public function down()
     {
-        // Revert the enum to original values
-        Schema::table('students', function (Blueprint $table) {
-            $table->enum('agama', ['islam', 'katolik', 'protestan', 'budha', 'hindu'])
-                ->nullable()
-                ->change();
-        });
-
-        // Note: We cannot reliably restore 'katolik' vs 'protestan' 
+        // Cannot reliably restore 'katolik' vs 'protestan'
         // All 'kristen' values will remain as 'kristen'
     }
 };
