@@ -74,6 +74,14 @@ class ViewStudent extends ViewRecord
                                             ->date('d F Y')
                                             ->icon('heroicon-o-calendar-days')
                                             ->inlineLabel(),
+                                        TextEntry::make('alamat')
+                                            ->label('Alamat')
+                                            ->icon('heroicon-o-home')
+                                            ->inlineLabel(),
+                                        TextEntry::make('agama')
+                                            ->label('Agama')
+                                            ->icon('heroicon-o-sparkles')
+                                            ->inlineLabel(),
                                         TextEntry::make('kelas')
                                             ->label('Kelas Saat Ini')
                                             ->badge()

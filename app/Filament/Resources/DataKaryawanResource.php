@@ -74,8 +74,7 @@ class DataKaryawanResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama Lengkap')
                     ->sortable()
-                    ->searchable()
-                    ->wrap(),
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('nomor_identitas')
                     ->label('Nomor Identitas')

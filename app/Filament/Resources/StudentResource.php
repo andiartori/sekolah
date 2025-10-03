@@ -53,15 +53,6 @@ class StudentResource extends Resource
                                                     ->required()
                                                     ->numeric()
                                                     ->unique(ignoreRecord: true),
-                                                Forms\Components\Radio::make('status')
-                                                    ->label('status')
-                                                    ->options([
-                                                        'Aktif' => 'Aktif',
-                                                        'Alumni' => 'Alumni',
-                                                    ])
-                                                    ->required()
-                                                    ->default('Aktif')
-                                                    ->helperText('Status siswa: Aktif atau Alumni'),
                                             ]),
 
                                         Forms\Components\Grid::make(3)
@@ -82,18 +73,6 @@ class StudentResource extends Resource
                                                     ->displayFormat('d/m/Y'),
                                             ]),
 
-                                        Forms\Components\Grid::make(3)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('kelas')
-                                                    ->label('Kelas Saat Ini')
-                                                    ->helperText('Format: [Nomor Kelas][Huruf Kelas Kapital], contoh: 4A, 2B, 1A')
-                                                    ->required(),
-                                                Forms\Components\TextInput::make('tahun_ajar')
-                                                    ->label('Tahun Ajaran')
-                                                    ->required(),
-                                                Forms\Components\TextInput::make('tahun_lulus')
-                                                    ->label('Tahun Kelulusan')
-                                            ]),
                                         // ADD THESE NEW FIELDS HERE:
                                         Forms\Components\Grid::make(2)
                                             ->schema([
@@ -113,6 +92,15 @@ class StudentResource extends Resource
                                                     ->nullable()
                                                     ->columnSpanFull(), // Makes it span full width
                                             ]),
+                                        Forms\Components\Radio::make('status')
+                                            ->label('status')
+                                            ->options([
+                                                'Aktif' => 'Aktif',
+                                                'Alumni' => 'Alumni',
+                                            ])
+                                            ->required()
+                                            ->default('Aktif')
+                                            ->helperText('Status siswa: Aktif atau Alumni'),
                                         Forms\Components\Grid::make(3)
                                             ->schema([
                                                 Forms\Components\TextInput::make('kelas')
