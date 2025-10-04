@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\StudentReligionChart;
+use App\Filament\Widgets\StudentYearChart;
 use Filament\Pages\Dashboard as BaseDashboard;
 use App\Filament\Widgets\StudentStatusStats;
 use App\Filament\Widgets\StudentGenderChart;
@@ -20,6 +22,8 @@ class Dashboard extends BaseDashboard
         return [
             StudentStatusStats::class,
             StudentGenderChart::class,
+                // StudentReligionChart::class,
+            StudentYearChart::class,
         ];
     }
 

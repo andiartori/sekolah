@@ -22,8 +22,8 @@ class StudentGenderChart extends ChartWidget
                     'label' => 'Distribusi Gender',
                     'data' => [$maleCount, $femaleCount],
                     'backgroundColor' => [
-                        'rgb(59, 130, 246)', // Blue for male
-                        'rgb(236, 72, 153)', // Pink for female
+                        'rgb(59, 130, 246)',
+                        'rgb(236, 72, 153)',
                     ],
                     'borderWidth' => 2,
                     'borderColor' => [
@@ -32,7 +32,10 @@ class StudentGenderChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => ['Laki-laki', 'Perempuan'],
+            'labels' => [
+                "Laki-laki ({$maleCount})",
+                "Perempuan ({$femaleCount})"
+            ],
         ];
     }
 

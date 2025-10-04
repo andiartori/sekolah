@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Filament\Widgets;
-
 use App\Models\Student;
 use App\Models\DataKaryawan;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -18,6 +16,13 @@ class StudentStatusStats extends BaseWidget
         $alumniStudents = Student::where('status', 'Alumni')->count();
         $totalEmployees = DataKaryawan::count();
         $teachers = DataKaryawan::where('is_pengajar', true)->count();
+        $totalClasses = Student::distinct('kelas')->count('kelas');
+
+        // Count by religion
+        $islamCount = Student::where('agama', 'islam')->count();
+        $hinduCount = Student::where('agama', 'Hindu')->count();
+        $budhaCount = Student::where('agama', 'budha')->count();
+        $kristenCount = Student::where('agama', 'kristen')->count();
 
         return [
             Stat::make('Total Siswa', $totalStudents)
@@ -49,6 +54,24 @@ class StudentStatusStats extends BaseWidget
                 ->descriptionIcon('heroicon-m-users')
                 ->color('success')
                 ->chart([2, 1, 3, 1, 4, 1, 4]),
+
+            Stat::make('Total Kelas', $totalClasses)
+                ->description('Jumlah kelas yang ada')
+                ->descriptionIcon('heroicon-m-building-library')
+                ->color('primary')
+                ->chart([5, 6, 6, 7, 8, 8, 9]),
+
+            Stat::make('Distribusi Agama', $islamCount + $hinduCount + $budhaCount + $kristenCount)
+                ->description(new \Illuminate\Support\HtmlString(
+                    '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.25rem;">' .
+                    '<div style="min-width: 45%;"><strong>Islam:</strong> ' . $islamCount . '</div>' .
+                    '<div style="min-width: 45%;"><strong>Kristen:</strong> ' . $kristenCount . '</div>' .
+                    '<div style="min-width: 45%;"><strong>Hindu:</strong> ' . $hinduCount . '</div>' .
+                    '<div style="min-width: 45%;"><strong>Budha:</strong> ' . $budhaCount . '</div>' .
+                    '</div>'
+                ))
+                ->descriptionIcon('heroicon-m-globe-asia-australia')
+                ->color('warning'),
         ];
     }
 }
