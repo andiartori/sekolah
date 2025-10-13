@@ -20,8 +20,24 @@ class DataKaryawan extends Model
         'jabatan',
         'tugas_utama',
         'tugas_tambahan',
+        'tmt',
+        'sk',
+        'tahun_pensiun',
         'is_pengajar',
         'is_verified'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'tmt' => 'date',
+        'sk' => 'date',
+        'tahun_pensiun' => 'integer',
+        'is_pengajar' => 'boolean',
+        'is_verified' => 'boolean',
     ];
 
     /**

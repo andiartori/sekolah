@@ -59,6 +59,23 @@ class DataKaryawanResource extends Resource
                     ->label('Tugas Tambahan')
                     ->maxLength(255),
 
+                Forms\Components\DatePicker::make('tmt')
+                    ->label('TMT (Terhitung Mulai Tanggal)')
+                    ->displayFormat('d/m/Y')
+                    ->native(false),
+
+                Forms\Components\DatePicker::make('sk')
+                    ->label('SK (Surat Keputusan)')
+                    ->displayFormat('d/m/Y')
+                    ->native(false),
+
+                Forms\Components\TextInput::make('tahun_pensiun')
+                    ->label('Tahun Pensiun')
+                    ->numeric()
+                    ->minValue(1900)
+                    ->maxValue(2100)
+                    ->placeholder('Contoh: 2030'),
+
                 Forms\Components\Toggle::make('is_pengajar')
                     ->label('Pengajar (Jika Pengajar, Aktifkan)')
                     ->onColor('success')
@@ -103,11 +120,25 @@ class DataKaryawanResource extends Resource
                     ->sortable()
                     ->searchable(),
 
+                Tables\Columns\TextColumn::make('tmt')
+                    ->label('TMT')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+
+                Tables\Columns\TextColumn::make('sk')
+                    ->label('SK')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('tahun_pensiun')
+                    ->label('Tahun Pensiun')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Diperbarui')

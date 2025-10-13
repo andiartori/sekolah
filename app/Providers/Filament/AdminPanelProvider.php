@@ -104,11 +104,13 @@ class AdminPanelProvider extends PanelProvider
                 ->url('/admin/students/alumni'),
         ]);
 
-        $builder->group('Monitor', [
-            NavigationItem::make('Log')
-                ->icon('heroicon-o-users')
-                ->url('/admin/activity-logs'),
-        ]);
+        if (auth()->user()?->is_superuser) {
+            $builder->group('Monitor', [
+                NavigationItem::make('Log')
+                    ->icon('heroicon-o-clipboard-document-list')
+                    ->url('/admin/activity-logs'),
+            ]);
+        }
 
         $builder->group('Verifikasi', [
             NavigationItem::make('Verifikasi Data Siswa')
