@@ -77,11 +77,13 @@ class AdminPanelProvider extends PanelProvider
         ]);
 
         // Add Karyawan group
-        $builder->group('Karyawan', [
-            NavigationItem::make('Data Karyawan')
-                ->icon('heroicon-o-user')
-                ->url('/admin/data-karyawan'),
-        ]);
+        if (auth()->user()?->is_superuser) {
+            $builder->group('Karyawan', [
+                NavigationItem::make('Data Karyawan')
+                    ->icon('heroicon-o-user')
+                    ->url('/admin/data-karyawan'),
+            ]);
+        }
 
         // Add Download group
         $builder->group('Download', [
