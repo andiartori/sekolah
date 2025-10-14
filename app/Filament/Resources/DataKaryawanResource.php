@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class DataKaryawanResource extends Resource
 {
@@ -24,6 +25,30 @@ class DataKaryawanResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Karyawan';
 
+
+    /**
+     * Hide from navigation unless user is superuser
+     */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+    /**
+     * Hide this resource from navigation unless user is superuser
+     */
+    public static function canViewAny(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+    /**
+     * Additional check for accessing the resource pages
+     */
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
     public static function form(Form $form): Form
     {
         return $form
