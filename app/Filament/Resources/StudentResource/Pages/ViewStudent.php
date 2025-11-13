@@ -26,79 +26,138 @@ class ViewStudent extends ViewRecord
     {
         return $infolist
             ->schema([
-                Tabs::make('Student Details')
+                Tabs::make('Detail Siswa')
                     ->tabs([
                         Tabs\Tab::make('Data Pribadi')
                             ->schema([
-                                Section::make('Informasi Dasar')
+                                Section::make('Informasi Dasar Siswa')
                                     ->schema([
-                                        TextEntry::make('nama')->label('Nama Lengkap'),
-                                        TextEntry::make('nipd')->label('NIPD'),
-                                        TextEntry::make('nisn')->label('NISN'),
+                                        TextEntry::make('nama_murid')
+                                            ->label('Nama')
+                                            ->weight('bold')
+                                            ->size('lg')
+                                            ->inlineLabel(),
+                                        TextEntry::make('no_induk')
+                                            ->label('Nomor Induk')
+                                            ->copyable()
+                                            ->icon('heroicon-o-identification')
+                                            ->inlineLabel(),
+                                        TextEntry::make('no_nisn')
+                                            ->label('Nomor NISN')
+                                            ->copyable()
+                                            ->icon('heroicon-o-identification')
+                                            ->inlineLabel(),
+                                        TextEntry::make('status')
+                                            ->label('Status')
+                                            ->badge()
+                                            ->color(fn(string $state): string => match ($state) {
+                                                'Aktif' => 'success',
+                                                'Alumni' => 'warning',
+                                                default => 'gray',
+                                            })
+                                            ->inlineLabel(),
                                         TextEntry::make('jenis_kelamin')
                                             ->label('Jenis Kelamin')
-                                            ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan'),
-                                        TextEntry::make('nik')->label('NIK'),
-                                        TextEntry::make('tempat_lahir')->label('Tempat Lahir'),
+                                            ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan')
+                                            ->badge()
+                                            ->color(fn(string $state): string => match ($state) {
+                                                'L' => 'info',
+                                                'P' => 'success',
+                                            })
+                                            ->inlineLabel(),
+                                        TextEntry::make('tempat_lahir')
+                                            ->label('Tempat Lahir')
+                                            ->icon('heroicon-o-map-pin')
+                                            ->inlineLabel(),
                                         TextEntry::make('tanggal_lahir')
                                             ->label('Tanggal Lahir')
-                                            ->date('d F Y'),
-                                        TextEntry::make('agama')->label('Agama'),
-                                        TextEntry::make('alamat')->label('Alamat'),
-                                        TextEntry::make('rt')->label('RT'),
-                                        TextEntry::make('rw')->label('RW'),
-                                        TextEntry::make('kecamatan')->label('Kecamatan'),
-                                        TextEntry::make('kelas_saat_ini')->label('Kelas Saat Ini'),
-                                        TextEntry::make('tahun_ajar')->label('Tahun Ajaran'),
-                                        TextEntry::make('status')->label('status'),
-                                    ])->columns(2)
-                            ]),
+                                            ->date('d F Y')
+                                            ->icon('heroicon-o-calendar-days')
+                                            ->inlineLabel(),
+                                        TextEntry::make('alamat')
+                                            ->label('Alamat')
+                                            ->icon('heroicon-o-home')
+                                            ->inlineLabel(),
+                                        TextEntry::make('agama')
+                                            ->label('Agama')
+                                            ->icon('heroicon-o-sparkles')
+                                            ->inlineLabel(),
+                                        TextEntry::make('kelas')
+                                            ->label('Kelas Saat Ini')
+                                            ->badge()
+                                            ->color('info')
+                                            ->icon('heroicon-o-academic-cap')
+                                            ->inlineLabel(),
+                                        TextEntry::make('tahun_ajar')
+                                            ->label('Tahun Ajaran')
+                                            ->badge()
+                                            ->color('primary')
+                                            ->inlineLabel(),
+                                        TextEntry::make('tahun_lulus')
+                                            ->label('Tahun Lulus')
+                                            ->formatStateUsing(function ($state) {
+                                                return $state ?? 'Belum Lulus';
+                                            })
+                                            ->badge()
+                                            ->color(function ($state) {
+                                                return $state ? 'success' : 'gray';
+                                            })
+                                            ->icon(function ($state) {
+                                                return $state ? 'heroicon-o-trophy' : 'heroicon-o-clock';
+                                            })
+                                            ->inlineLabel(),
+                                    ])
+                                    ->columns(3)
+                                    ->columnSpanFull()
+                                    ->compact(),
 
-                        Tabs\Tab::make('Data Ayah')
-                            ->schema([
-                                Section::make('Informasi Ayah')
+                                Section::make('Informasi Orang Tua/Wali')
                                     ->schema([
-                                        TextEntry::make('ayah_nama')->label('Nama')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ayah_tahun_lahir')->label('Tahun Lahir')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ayah_pendidikan')->label('Pendidikan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ayah_pekerjaan')->label('Pekerjaan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ayah_penghasilan')
-                                            ->label('Penghasilan')
-                                            ->formatStateUsing(fn($state) => $state ? 'Rp ' . number_format($state, 0, ',', '.') : 'Tidak ada data'),
-                                        TextEntry::make('ayah_nik')->label('NIK')->placeholder('Tidak ada data'),
-                                    ])->columns(2)
-                            ]),
+                                        TextEntry::make('nama_ibu')
+                                            ->label('Nama Ibu')
+                                            ->icon('heroicon-o-user')
+                                            ->placeholder('Tidak ada data')
+                                            ->inlineLabel(),
+                                        TextEntry::make('kontak_ibu')
+                                            ->label('Kontak Ibu')
+                                            ->icon('heroicon-o-phone')
+                                            ->copyable()
+                                            ->placeholder('Tidak ada data')
+                                            ->inlineLabel(),
+                                    ])
+                                    ->columns(2)
+                                    ->columnSpanFull()
+                                    ->compact(),
 
-                        Tabs\Tab::make('Data Ibu')
-                            ->schema([
-                                Section::make('Informasi Ibu')
+                                Section::make('Informasi Sistem')
                                     ->schema([
-                                        TextEntry::make('ibu_nama')->label('Nama')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ibu_tahun_lahir')->label('Tahun Lahir')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ibu_pendidikan')->label('Pendidikan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ibu_pekerjaan')->label('Pekerjaan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('ibu_penghasilan')
-                                            ->label('Penghasilan')
-                                            ->formatStateUsing(fn($state) => $state ? 'Rp ' . number_format($state, 0, ',', '.') : 'Tidak ada data'),
-                                        TextEntry::make('ibu_nik')->label('NIK')->placeholder('Tidak ada data'),
-                                    ])->columns(2)
-                            ]),
-
-                        Tabs\Tab::make('Data Wali')
-                            ->schema([
-                                Section::make('Informasi Wali')
-                                    ->schema([
-                                        TextEntry::make('wali_nama')->label('Nama')->placeholder('Tidak ada data'),
-                                        TextEntry::make('wali_tahun_lahir')->label('Tahun Lahir')->placeholder('Tidak ada data'),
-                                        TextEntry::make('wali_pendidikan')->label('Pendidikan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('wali_pekerjaan')->label('Pekerjaan')->placeholder('Tidak ada data'),
-                                        TextEntry::make('wali_penghasilan')
-                                            ->label('Penghasilan')
-                                            ->formatStateUsing(fn($state) => $state ? 'Rp ' . number_format($state, 0, ',', '.') : 'Tidak ada data'),
-                                        TextEntry::make('wali_nik')->label('NIK')->placeholder('Tidak ada data'),
-                                    ])->columns(2)
+                                        TextEntry::make('created_at')
+                                            ->label('Tanggal Dibuat')
+                                            ->dateTime('d F Y, H:i')
+                                            ->icon('heroicon-o-calendar-days')
+                                            ->inlineLabel(),
+                                        TextEntry::make('updated_at')
+                                            ->label('Terakhir Diperbarui')
+                                            ->dateTime('d F Y, H:i')
+                                            ->icon('heroicon-o-pencil-square')
+                                            ->inlineLabel(),
+                                    ])
+                                    ->columns(2)
+                                    ->columnSpanFull()
+                                    ->collapsed()
+                                    ->compact(),
                             ]),
                     ])
-            ]);
+                    ->columnSpanFull()
+            ])
+            ->columns(1); // This ensures full width
+    }
+
+    // Override the default layout to make it full width
+    protected function getViewData(): array
+    {
+        return array_merge(parent::getViewData(), [
+            'maxContentWidth' => null,
+        ]);
     }
 }

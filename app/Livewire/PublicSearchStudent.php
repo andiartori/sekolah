@@ -8,25 +8,25 @@ use App\Models\Student;
 
 class PublicSearchStudent extends Component
 {
-    public $nama;
+    public $nama_murid;
     public $tanggal_lahir;
     public $student = null;
 
     public function search()
     {
         $this->student = Student::query()
-            ->when($this->nama, function ($q) {
-                $q->whereRaw('LOWER(nama) LIKE ?', ['%' . strtolower($this->nama) . '%']);
+            ->when($this->nama_murid, function ($q) {
+                $q->whereRaw('LOWER(nama_murid) LIKE ?', ['%' . strtolower($this->nama_murid) . '%']);
             })
             ->when($this->tanggal_lahir, fn($q) => $q->where('tanggal_lahir', $this->tanggal_lahir))
-            ->first(); 
+            ->first();
     }
 
 
     public function render()
     {
         return view('livewire.public-search-student')
-            ->layout('components.layouts.app'); 
+            ->layout('components.layouts.app');
     }
 
 }

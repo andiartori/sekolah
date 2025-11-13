@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class DataKaryawanResource extends Resource
 {
@@ -24,6 +25,30 @@ class DataKaryawanResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Karyawan';
 
+
+    /**
+     * Hide from navigation unless user is superuser
+     */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+    /**
+     * Hide this resource from navigation unless user is superuser
+     */
+    public static function canViewAny(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+    /**
+     * Additional check for accessing the resource pages
+     */
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -37,6 +62,7 @@ class DataKaryawanResource extends Resource
                 Forms\Components\TextInput::make('nomor_identitas')
                     ->label('Nomor Identitas')
                     ->required()
+                    ->numeric()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->placeholder('Masukkan nomor identitas')
@@ -50,13 +76,36 @@ class DataKaryawanResource extends Resource
                     ->label('Jabatan')
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('tugas_mengajar')
-                    ->label('Tugas Mengajar')
+                Forms\Components\TextInput::make('tugas_utama')
+                    ->label('Tugas Utama')
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('tugas_tambahan')
                     ->label('Tugas Tambahan')
                     ->maxLength(255),
+
+                Forms\Components\DatePicker::make('tmt')
+                    ->label('TMT (Terhitung Mulai Tanggal)')
+                    ->displayFormat('d/m/Y')
+                    ->native(false),
+
+                Forms\Components\DatePicker::make('sk')
+                    ->label('SK (Surat Keputusan)')
+                    ->displayFormat('d/m/Y')
+                    ->native(false),
+
+                Forms\Components\TextInput::make('tahun_pensiun')
+                    ->label('Tahun Pensiun')
+                    ->numeric()
+                    ->minValue(1900)
+                    ->maxValue(2100)
+                    ->placeholder('Contoh: 2030'),
+
+                Forms\Components\Toggle::make('is_pengajar')
+                    ->label('Pengajar (Jika Pengajar, Aktifkan)')
+                    ->onColor('success')
+                    ->offColor('secondary')
+                    ->default(false),
             ]);
     }
 
@@ -65,10 +114,9 @@ class DataKaryawanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
-                    ->label('Nama')
+                    ->label('Nama Lengkap')
                     ->sortable()
-                    ->searchable()
-                    ->wrap(),
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('nomor_identitas')
                     ->label('Nomor Identitas')
@@ -87,8 +135,8 @@ class DataKaryawanResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('tugas_mengajar')
-                    ->label('Tugas Mengajar')
+                Tables\Columns\TextColumn::make('tugas_utama')
+                    ->label('Tugas Utama')
                     ->sortable()
                     ->searchable(),
 
@@ -97,11 +145,25 @@ class DataKaryawanResource extends Resource
                     ->sortable()
                     ->searchable(),
 
+                Tables\Columns\TextColumn::make('tmt')
+                    ->label('TMT')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+
+                Tables\Columns\TextColumn::make('sk')
+                    ->label('SK')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('tahun_pensiun')
+                    ->label('Tahun Pensiun')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Diperbarui')
@@ -156,8 +218,11 @@ class DataKaryawanResource extends Resource
         return [
             'index' => Pages\ListDataKaryawan::route('/'),
             'create' => Pages\CreateDataKaryawan::route('/create'),
+            'verifikasi' => Pages\ListVerifikasiKaryawan::route('/verifikasi'), // MOVED BEFORE {record} routes
             'view' => Pages\ViewDataKaryawan::route('/{record}'),
             'edit' => Pages\EditDataKaryawan::route('/{record}/edit'),
+
         ];
+
     }
 }

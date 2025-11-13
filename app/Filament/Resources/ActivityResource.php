@@ -6,6 +6,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Auth;
+
 
 class ActivityResource extends Resource
 {
@@ -16,6 +18,32 @@ class ActivityResource extends Resource
     protected static ?string $pluralModelLabel = 'Activity Logs';
     protected static ?string $slug = 'activity-logs';
     protected static ?int $navigationSort = 99;
+
+    /**
+     * Hide from navigation unless user is superuser
+     */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+
+    /**
+     * Hide this resource from navigation unless user is superuser
+     */
+    public static function canViewAny(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
+    /**
+     * Additional check for accessing the resource pages
+     */
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->is_superuser ?? false;
+    }
+
 
     public static function table(Table $table): Table
     {
