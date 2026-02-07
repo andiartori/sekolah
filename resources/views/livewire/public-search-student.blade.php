@@ -1,4 +1,4 @@
-<div class="bg-secondary min-h-screen w-full overflow-x-hidden">
+<div class="bg-secondary min-h-screen w-full overflow-x-hidden flex flex-col">
     <!-- Top Navbar -->
     <nav class="w-full p-4 flex justify-between">
         <div>
@@ -12,12 +12,12 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center flex-grow">
         <div class="w-32 h-32">
             <img class="w-full h-full object-contain" src="{{ asset('logo.png') }}" alt="Logo">
         </div>
 
-        <div class="w-3/4 mx-auto p-12 space-y-6 rounded-lg">
+        <div class="w-full px-4 py-6 md:w-3/4 md:p-12 mx-auto space-y-6 rounded-lg">
             <h1 class="text-3xl text-white font-bold text-center">Kolom Pencarian Data Murid</h1>
             
             <div class="text-white">
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="w-full bg-gray-900/50 backdrop-blur-sm mt-12 py-6">
+    <footer class="w-full bg-gray-900/50 backdrop-blur-sm mt-auto py-6">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
                 <div class="text-center md:text-left">
